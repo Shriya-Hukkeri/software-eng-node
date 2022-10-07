@@ -6,7 +6,7 @@ import tuitController from "./controllers/TuitController";
 import userController from "./controllers/UserController";
 import mongoose from "mongoose";
 
-const CONNECTION_STRING = "mongodb://localhost:27017/tuiter"
+const CONNECTION_STRING = "mongodb+srv://Shriya:Password123@cluster0.brny7ia.mongodb.net/tuiter?retryWrites=true&w=majority"
 mongoose.connect(CONNECTION_STRING);
 
 
