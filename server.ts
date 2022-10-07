@@ -6,7 +6,7 @@ import tuitController from "./controllers/TuitController";
 import userController from "./controllers/UserController";
 import mongoose from "mongoose";
 
-const CONNECTION_STRING = process.env.MONGODB_URI || 'mongodb://localhost:27017/tuiter'
+const CONNECTION_STRING = "mongodb://localhost:27017/tuiter"
 mongoose.connect(CONNECTION_STRING);
 
 
