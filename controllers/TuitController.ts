@@ -11,10 +11,10 @@ export default class TuitController implements TuitControllerI {
             TuitController.tuitController = new TuitController();
             app.get("/tuits", TuitController.tuitController.findAllTuits);
             app.get("/users/:uid/tuits", TuitController.tuitController.findTuitsByUser);
-            app.get("/tuits/:uid", TuitController.tuitController.findTuitById);
+            app.get("/tuits/:tid", TuitController.tuitController.findTuitById);
             app.post("/users/:uid/tuits", TuitController.tuitController.createTuit);
-            app.put("/tuits/:uid", TuitController.tuitController.updateTuit);
-            app.delete("/tuits/:uid", TuitController.tuitController.deleteTuit);
+            app.put("/tuits/:tid", TuitController.tuitController.updateTuit);
+            app.delete("/tuits/:tid", TuitController.tuitController.deleteTuit);
         }
         return TuitController.tuitController;
     }
@@ -26,16 +26,16 @@ export default class TuitController implements TuitControllerI {
         TuitController.tuitDao.findTuitsByUser(req.params.uid)
             .then((tuits: Tuit[]) => res.json(tuits));
     findTuitById = (req: Request, res: Response) =>
-        TuitController.tuitDao.findTuitById(req.params.uid)
+        TuitController.tuitDao.findTuitById(req.params.tid)
             .then((tuit: Tuit) => res.json(tuit));
     createTuit = (req: Request, res: Response) =>
         TuitController.tuitDao.createTuit(req.params.uid, req.body)
             .then((tuit: Tuit) => res.json(tuit));
     updateTuit = (req: Request, res: Response) =>
-        TuitController.tuitDao.updateTuit(req.params.uid, req.body)
+        TuitController.tuitDao.updateTuit(req.params.tid, req.body)
             .then((status) => res.send(status));
     deleteTuit = (req: Request, res: Response) =>
-        TuitController.tuitDao.deleteTuit(req.params.uid)
+        TuitController.tuitDao.deleteTuit(req.params.tid)
             .then((status) => res.send(status));
 
 };
