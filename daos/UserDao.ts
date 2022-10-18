@@ -13,20 +13,21 @@ export default class UserDao implements UserDaoI {
     }
 
     async findAllUsers(): Promise<User[]> {
-        return await UserModel.find();
+        return UserModel.find();
     }
     async findUserById(uid: string): Promise<any> {
-        return await UserModel.findById(uid);
+        return UserModel.findById(uid);
     }
 
-    async createUser(user: User): Promise<any>{
-        return await UserModel.create(user);
+    async createUser(user: User): Promise<User>{
+        const newUser: any = await UserModel.create(user);
+        return new User(newUser.username, newUser.password, newUser.firstname||'',
+            newUser.lastname||'', newUser.email||'');
     }
     async deleteUser(uid: string): Promise<any> {
-        return await UserModel.deleteOne({_id: uid});
+        return UserModel.deleteOne({_id: uid});
     }
-    async updateUser(uid: string, user: User): Promise<any> {
-        // @ts-ignore
-        return await UserModel.updateOne({_id: uid}, {$set: user})
+    async updateUser(uid: string, user: any): Promise<any> {
+        return UserModel.updateOne({_id: uid}, {$set: user});
     }
 }
