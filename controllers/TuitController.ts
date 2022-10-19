@@ -21,18 +21,19 @@ export default class TuitController implements TuitControllerI {
 
     findAllTuits = (req: Request, res: Response) =>
         TuitController.tuitDao.findAllTuits()
-            .then((tuits: Tuit[]) => res.json(tuits));
+            .then(tuits => res.json(tuits));
 
     findTuitsByUser = (req: Request, res: Response) =>
         TuitController.tuitDao.findTuitsByUser(req.params.uid)
-            .then((tuits: Tuit[]) => res.json(tuits));
+            .then(tuits  => res.json(tuits));
 
-    findTuitById = (req: Request, res: Response) =>
+       findTuitById = (req: Request, res: Response) =>
         TuitController.tuitDao.findTuitById(req.params.tid)
-            .then((tuit: Tuit) => res.json(tuit));
+            .then(tuit => res.json(tuit));
 
     createTuit = (req: Request, res: Response) =>
-        TuitController.tuitDao.createTuit(req.body).then(tuit => res.json(tuit));
+        TuitController.tuitDao.createTuit(req.body)
+            .then(tuit => res.json(tuit));
 
     updateTuit = (req: Request, res: Response) =>
         TuitController.tuitDao.updateTuit(req.params.tid, req.body)
