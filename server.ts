@@ -5,6 +5,7 @@ import express, {Request, Response} from 'express';
 import tuitController from "./controllers/TuitController";
 import userController from "./controllers/UserController";
 import likeController from "./controllers/LikeController";
+import followController from "./controllers/FollowController";
 import mongoose from "mongoose";
 
 const CONNECTION_STRING = process.env.MONGODB_URI || "mongodb+srv://Shriya:Password123@cluster0.brny7ia.mongodb.net/tuiter?retryWrites=true&w=majority"
@@ -19,7 +20,7 @@ app.use(express.json());
 tuitController.getInstance(app)
 userController.getInstance(app);
 likeController.getInstance(app);
-
+followController.getInstance(app);
 
 /**
  * Start a server listening at port 4000 locally

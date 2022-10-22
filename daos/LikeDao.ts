@@ -8,7 +8,7 @@ import Like from "../models/likes/Like";
 
 /**
  * @class LikeDao Implements Data Access Object managing data storage of likes
- * @implements {TuitLikeDaoIDaoI} LikeDaoI
+ * @implements {LikeDaoI} LikeDaoI
  * @property {LikeDao} likeDao Private single instance of LikeDao
  */
 export default class LikeDao implements LikeDaoI {
