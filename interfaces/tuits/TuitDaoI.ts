@@ -1,11 +1,13 @@
-import Tuit from "../models/Tuit";
-import User from "../models/User";
+/**
+ * @file Represents the tuit DAO methods
+ */
+import Tuit from "../../models/tuits/Tuit";
 
 export default interface TuitDaoI {
     findAllTuits(): Promise<Tuit[]>;
     findTuitsByUser(uid: string): Promise<Tuit[]>;
     findTuitById(tid: string): Promise<Tuit>;
-    createTuit(tuit: Tuit): Promise<User>;
+    createTuitByUser(uid: string, tuit: Tuit): Promise<Tuit>;
     updateTuit(tid: string, tuit: Tuit): Promise<any>;
     deleteTuit(tid: string): Promise<any>;
 }

@@ -8,7 +8,8 @@
     "build": "tsc --project ./",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm run build",
-    "dev": "nodemon server.ts"
+    "dev": "nodemon server.ts",
+    "debug": "nodemon server.ts"
   },
   "author": "",
   "license": "ISC",
