@@ -71,7 +71,7 @@ export default class FollowController implements FollowControllerI {
     }
 
     /**
-     * Deletes a like instance from the likes collection in the database
+     * Deletes a follow instance from the follows collection in the database
      * @param {Request} req is the request from clients with
      * uid1 as primary key of user who is following the user uid2
      * @param {Response} res is the response to the client that contains the delete status
