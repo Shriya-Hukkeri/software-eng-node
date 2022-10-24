@@ -19,6 +19,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//instantiate the controllers
 tuitController.getInstance(app)
 userController.getInstance(app);
 likeController.getInstance(app);
