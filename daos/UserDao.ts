@@ -32,19 +32,7 @@ export default class UserDao implements UserDaoI {
      * @returns {Promise} To be notified when the users are retrieved from database
      */
     async findAllUsers(): Promise<User[]> {
-        const userMongooseModels = await UserModel.find();
-        const userModels = userMongooseModels
-            .map((userMongooseModel: { _id: { toString: () => any; }; username: any; password: any; firstname: any, lastname: any}) => {
-                return new User(
-                    userMongooseModel?._id.toString()??'',
-                    userMongooseModel?.username??'',
-                    userMongooseModel?.password??'',
-                    userMongooseModel?.firstname??'',
-                    userMongooseModel?.lastname??''
-
-                );
-            });
-        return userModels;
+        return UserModel.find().exec();
     }
 
     /**
@@ -53,14 +41,7 @@ export default class UserDao implements UserDaoI {
      * @returns {Promise} To be notified when user is retrieved from the database
      */
     async findUserById(uid: string): Promise<User> {
-        const userMongooseModel = await UserModel.findById(uid);
-        return new User(
-            userMongooseModel?._id.toString()??'',
-            userMongooseModel?.username??'',
-            userMongooseModel?.password??'',
-            userMongooseModel?.firstname??'',
-            userMongooseModel?.lastname??''
-        );
+        return UserModel.findById(uid).exec();
     }
 
     /**
@@ -69,9 +50,8 @@ export default class UserDao implements UserDaoI {
      * @returns {Promise} To be notified when user is inserted into the database
      */
     async createUser(user: User): Promise<User> {
-        const createdUser : any = await UserModel.create(user);
-        return new User(createdUser._id.toString()??'', createdUser.username??'', createdUser.password??'',
-            createdUser.firstname??'', createdUser.lastname??'');
+        // @ts-ignore
+        return UserModel.create(user);
     }
 
     /**
@@ -79,7 +59,7 @@ export default class UserDao implements UserDaoI {
      * @param {string} uid Primary key of the user
      * @returns {Promise} To be notified when user is deleted from the database
      */
-    async deleteUser(uid: string):  Promise<any> {
+    async deleteUser(uid: string): Promise<any> {
         return UserModel.deleteOne({_id: uid});
     }
 
@@ -90,13 +70,18 @@ export default class UserDao implements UserDaoI {
      * @returns {Promise} To be notified when user is updated in the database
      */
     async updateUser(uid: string, user: any): Promise<any> {
-        return  UserModel.updateOne({_id: uid}, {$set: {
-                username: user.username,
-                password: user.password,
-                firstname:user.firstname,
-                lastname: user.lastname
-            }});
+        return  UserModel.updateOne({_id: uid},{$set: user});
     }
 
+
+    //A3 - additional methods
+    async findUserByCredentials(username: string, password: string) {
+        return UserModel.findOne({username: username, password: password})
+
+    }
+
+    async deleteUsersByUsername(username: string) {
+        return UserModel.deleteMany({user: username})
+    }
 
 }

@@ -28,6 +28,10 @@ export default class UserController implements UserControllerI {
             app.post('/users', UserController.userController.createUser);
             app.delete('/users/:userid', UserController.userController.deleteUser);
             app.put('/users/:userid', UserController.userController.updateUser);
+
+            //A3 - additional apis for testing front end
+            app.get("users/username/:username/delete", UserController.userController.deleteUsersByUsername);
+            app.post("/api/login", UserController.userController.login);
         }
         return UserController.userController;
     }
@@ -79,4 +83,14 @@ export default class UserController implements UserControllerI {
     updateUser = (req: Request, res: Response) =>
         UserController.userDao.updateUser(req.params.userid, req.body)
             .then(status => res.json(status));
+
+
+    //A3- additional method
+    deleteUsersByUsername = (req: Request, res: Response) =>
+        UserController.userDao.deleteUsersByUsername(req.params.username)
+            .then(status => res.json(status));
+
+    login = (req: Request, res: Response) =>
+        UserController.userDao.findUserByCredentials(req.body.username, req.body.password)
+            .then(user => res.json(user));
 }

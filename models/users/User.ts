@@ -20,11 +20,10 @@ import Location from "./Location";
  * @property {Location} location User's location
  */
 export default class User{
-    private id: string;
     private username: string = '';
     private password: string = '';
-    private firstname: string | null = null;
-    private lastname: string | null = null;
+    private firstName: string | null = null;
+    private lastName: string | null = null;
     private email: string = '';
     private profilePhoto: string | null = null;
     private headerImage: string | null = null;
@@ -34,13 +33,6 @@ export default class User{
     private dateOfBirth: Date | null = null;
     private joined: Date = new Date();
     private location: Location | null = null;
-
-    constructor(id: string, username: string, password: string, firstname: string, lastname: string){
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
 }
+
 
