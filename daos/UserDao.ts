@@ -81,7 +81,7 @@ export default class UserDao implements UserDaoI {
     }
 
     async deleteUsersByUsername(username: string) {
-        return UserModel.deleteMany({user: username})
+        return UserModel.deleteMany({username})
     }
 
 }

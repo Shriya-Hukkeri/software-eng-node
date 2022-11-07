@@ -99,8 +99,10 @@ export default class TuitController implements TuitControllerI {
 
 
     //A3 - additional
-    deleteTuitByContent = (req: Request, res: Response) =>
+    deleteTuitByContent = (req: Request, res: Response) => {
+        console.log(req);
         this.tuitDao.deleteTuitByContent(req.params.content)
             .then((status) => res.json(status));
+    }
 };
 

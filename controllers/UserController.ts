@@ -30,7 +30,7 @@ export default class UserController implements UserControllerI {
             app.put('/users/:userid', UserController.userController.updateUser);
 
             //A3 - additional apis for testing front end
-            app.get("users/username/:username/delete", UserController.userController.deleteUsersByUsername);
+            app.delete("/users/username/:username/delete", UserController.userController.deleteUsersByUsername);
             app.post("/api/login", UserController.userController.login);
         }
         return UserController.userController;
