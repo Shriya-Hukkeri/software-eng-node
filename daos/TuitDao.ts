@@ -18,12 +18,14 @@ export default class TuitDao implements TuitDaoI {
      * @returns TuitDao
      */
     public static getInstance = (): TuitDao => {
-        if(TuitDao.tuitDao === null) {
+        if (TuitDao.tuitDao === null) {
             TuitDao.tuitDao = new TuitDao();
         }
         return TuitDao.tuitDao;
     }
-    private constructor() {}
+
+    private constructor() {
+    }
 
 
     /**
@@ -31,7 +33,9 @@ export default class TuitDao implements TuitDaoI {
      * @returns {Promise} To be notified when the tuits are retrieved from database
      */
     public findAllTuits = async (): Promise<Tuit[]> =>
-        tuitModel.find().exec();
+        tuitModel.find()
+            .populate("postedBy")
+            .exec();
 
     /**
      * Retrieves a single tuit from tuits collection
@@ -52,6 +56,7 @@ export default class TuitDao implements TuitDaoI {
     public findTuitsByUser=async(uid: string): Promise<Tuit[]> =>
         tuitModel
             .find({postedBy: uid})
+            .populate("postedBy")
             .exec();
 
 
@@ -62,6 +67,7 @@ export default class TuitDao implements TuitDaoI {
      * @returns {Promise} To be notified when tuit is inserted into the database
      */
     public createTuitByUser = async (uid: string, tuit: Tuit): Promise<Tuit> =>
+        //@ts-ignore
         await tuitModel.create({...tuit, postedBy: uid});
 
     /**
@@ -86,4 +92,10 @@ export default class TuitDao implements TuitDaoI {
     //A3 - additional method
     public deleteTuitByContent = async (tuit: string): Promise<any> =>
         tuitModel.deleteMany({tuit});
+
+    public updateLikes = async (tid: string, newStats: any): Promise<any> =>
+        tuitModel.updateOne(
+            {_id: tid},
+            {$set: {stats: newStats}}
+        );
 }
