@@ -19,7 +19,7 @@ export default class LikeDao implements LikeDaoI {
      * @returns LikeDao
      */
     public static getInstance = (): LikeDao => {
-        if(LikeDao.likeDao === null){
+        if (LikeDao.likeDao === null) {
             LikeDao.likeDao = new LikeDao();
         }
         return LikeDao.likeDao;
@@ -28,15 +28,21 @@ export default class LikeDao implements LikeDaoI {
     private constructor() {
     }
 
+
     /**
      * Retrieves all the tuits liked by a particular user
      * @param {string} uid User's primary key
      * @returns {Promise} To be notified when the tuits are retrieved from database
      */
     public findTuitsLikedByUser = async (uid: string): Promise<Like[]> =>
+        // @ts-ignore
         LikeModel
             .find({likedBy: uid})
-            .populate("tuit")
+            .populate({
+                path: "tuit", populate: {
+                    path: "postedBy"
+                }
+            })
             .exec();
 
 
@@ -68,4 +74,10 @@ export default class LikeDao implements LikeDaoI {
      */
     public userUnlikesATuit = async (uid: string, tid: string): Promise<any> =>
         LikeModel.deleteOne({tuit: tid, likedBy: uid});
+
+    public findUserLikesTuit = async (uid: string, tid: string): Promise<any> =>
+        LikeModel.findOne({tuit: tid, likedBy: uid});
+
+    public countHowManyLikedTuit = async (tid: string): Promise<any> =>
+        LikeModel.count({tuit: tid});
 }
