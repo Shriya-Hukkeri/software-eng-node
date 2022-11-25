@@ -10,6 +10,7 @@ import bookmarkController from "./controllers/BookmarkController";
 import messageController from "./controllers/MessageController";
 import mongoose from "mongoose";
 import authController from "./controllers/AuthController";
+import dislikeController from "./controllers/DislikeController";
 
 const cors = require('cors')
 const session = require('express-session');
@@ -59,6 +60,7 @@ likeController.getInstance(app);
 followController.getInstance(app);
 bookmarkController.getInstance(app);
 messageController.getInstance(app);
+dislikeController.getInstance(app);
 authController(app);
 /**
  * Start a server listening at port 4000 locally

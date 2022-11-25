@@ -1,5 +1,5 @@
 /**
- * @file Declares API for dislikes related data access object methods
+ * @file Represents the dislike DAO methods
  */
 import Dislike from "../../models/dislikes/Dislikes";
 

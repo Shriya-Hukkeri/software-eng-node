@@ -99,8 +99,13 @@ export default class LikeController implements LikeControllerI {
     }
 
 
+    /**
+     * Retrieves the like stats for a particular user and tuit
+     * @param {Request} req is the request from client, with uid as the primary key of the user and tid as the primary
+     * key of the tuit
+     * @param {Response} res is the response to client JSON which contains the tuits that were liked
+     */
     findUserLikesTuit = (req: Request, res: Response) => {
-        console.log("entered COntroller", req)
         const uid = req.params.uid;
         const tid = req.params.tid;
         //@ts-ignore
@@ -113,6 +118,13 @@ export default class LikeController implements LikeControllerI {
 
     }
 
+    /**
+     * Update tuit stats for a particular user
+     * @param {Request} req is the request from client,with uid as the primary key of the user who liked the tuit
+     * and tid as the primary key of the tuit that is liked
+     * @param {Response} res is the response to client as JSON which contains the new likes that were inserted in the
+     * database
+     */
     userTogglesTuitLikes = async (req: Request, res: Response) => {
         const likeDao = LikeController.likeDao;
         const dislikeDao = LikeController.dislikeDao;
@@ -137,6 +149,13 @@ export default class LikeController implements LikeControllerI {
             } else {
                 await likeDao.userLikesATuit(userId, tid);
                 tuit.stats.likes = noOfLikes + 1;
+
+                const previouslyDisliked = await dislikeDao.findUserDislikesTuit(userId, tid);
+                const noOfDislikes = await dislikeDao.countHowManyDislikedTuit(tid);
+                if (previouslyDisliked) {
+                    await dislikeDao.userUndislikesTuit(userId, tid);
+                    tuit.stats.dislikes = noOfDislikes - 1;
+                }
             }
             await tuitDao.updateLikes(tid, tuit.stats);
             res.sendStatus(200);
@@ -147,6 +166,11 @@ export default class LikeController implements LikeControllerI {
 
     }
 
+    /**
+     * This method changes the links the likes and dislikes with the tuits
+     * @param likedTuits a list of tuits that are liked by a particular user
+     * @param userId is the primary key of the user
+     */
     private async linkLikesWithTuits(likedTuits: Tuit[], userId: string) {
         for (let i = 0; i < likedTuits.length; i++) {
             const previouslyLiked = await LikeController.likeDao.findUserLikesTuit(userId, likedTuits[i]._id);

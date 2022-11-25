@@ -132,6 +132,11 @@ export default class TuitController implements TuitControllerI {
             .then((status) => res.json(status));
     }
 
+    /**
+     * This method changes the links the likes and dislikes with the tuits
+     * @param tuits a list of tuits for a particular user
+     * @param userId is the primary key of the user
+     */
     private async linkLikesWithTuits(tuits: Tuit[], userId: string) {
         for (let i = 0; i < tuits.length; i++) {
             const previouslyLiked = await this.likeDao.findUserLikesTuit(userId, tuits[i]._id);

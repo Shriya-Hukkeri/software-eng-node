@@ -28,7 +28,7 @@ const AuthController = (app: Express) => {
         }
     }
 
-    //Usr Login
+    //User Login
     const login = async (req: Request, res: Response) => {
         const newUser = req.body;
         const username = newUser.username;
@@ -48,6 +48,7 @@ const AuthController = (app: Express) => {
         }
     }
 
+    //User profile contents
     const profile = async (req: Request, res: Response) => {
         // @ts-ignore
         const profile = req.session['profile']
@@ -58,6 +59,7 @@ const AuthController = (app: Express) => {
         }
     }
 
+    //User logout
     const logout = async (req: Request, res: Response) => {
         // @ts-ignore
         req.session.destroy();

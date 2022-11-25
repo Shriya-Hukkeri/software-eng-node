@@ -93,6 +93,12 @@ export default class TuitDao implements TuitDaoI {
     public deleteTuitByContent = async (tuit: string): Promise<any> =>
         tuitModel.deleteMany({tuit});
 
+    /**
+     * Updates the stats for a particular tuit
+     * @param {string} tid is the primary key of tuit
+     * @param {any} newStats the tuits stats schema
+     * @returns {Promise} To be notified when the tuit is updated in the database
+     */
     public updateLikes = async (tid: string, newStats: any): Promise<any> =>
         tuitModel.updateOne(
             {_id: tid},

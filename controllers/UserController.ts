@@ -90,6 +90,12 @@ export default class UserController implements UserControllerI {
         UserController.userDao.deleteUsersByUsername(req.params.username)
             .then(status => res.json(status));
 
+    /**
+     * Authenticates a user that wants to login
+     * @param req is the request from client that contains the username and password in the request
+     * body for authentication
+     * @param res is the response to the client as json that returns the user object after authentication
+     */
     login = (req: Request, res: Response) =>
         UserController.userDao.findUserByCredentials(req.body.username, req.body.password)
             .then(user => res.json(user));
