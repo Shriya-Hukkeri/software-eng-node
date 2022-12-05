@@ -36,7 +36,7 @@ app.use(
 
 
 let sess = {
-    secret: "C[Ps9E%q6woaip",
+    secret: process.env.SECRET ? process.env.SECRET : "C[Ps9E%q6woaip",
     saveUninitialized: true,
     resave: true,
     cookie: {
